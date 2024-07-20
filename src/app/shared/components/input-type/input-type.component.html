@@ -1,0 +1,79 @@
+<div [formGroup]="formGroup" class="input-type" [ngClass]="{'invalid-box': (control.errors || control.invalid && (control.dirty || control.touched))}">
+  <label *ngIf="showLabel" class="default-label-input">
+    {{label}}
+
+    <span *ngIf="isRequired && showRequiredLabel" class="required-alert">*</span>
+  </label>
+
+  <!-- Input type text, number, date, password -->
+  <ng-container *ngIf="type === 'text' || type === 'number' || type === 'date' || type === 'password' || type === 'email'">
+    <input [id]="id"
+           [name]="name"
+           [formControlName]="id"
+           [type]="type"
+           [readOnly]="disabled"
+           [placeholder]="placeholder"
+           [class]="'custom-default-input'"/>
+  </ng-container>
+
+  <!-- Input type Select, Dropdown and Drop multiple -->
+  <ng-container *ngIf="type === 'select'">
+    <div class="custom-dropdown">
+      <div class="container-drop-view" [ngClass]="{'container-drop-multiple-view': multiple}">
+        <button
+          [id]="'btn' + id"
+          [disabled]="disabled"
+          [class]="'new-dropdown-toggle'"
+          (focus)="onFocusTouchedDirty()"
+          (click)="toggleDropdown()">
+
+          <span *ngIf="!valueDropSelected || (!valueDropSelected?.length && multiple)" class="content-placeholder">{{placeholder}}</span>
+
+          <ng-container *ngIf="!multiple && valueDropSelected">
+            <span *ngIf="!bindLabel" [innerText]="valueDropSelected" class="content-value"></span>
+            <span *ngIf="bindLabel" [innerText]="valueDropSelected[bindLabel]" class="content-value"></span>
+            <input [id]="'single' + id" [name]="name" [formControlName]="id" class="input-hidden">
+          </ng-container>
+
+          <ng-container *ngIf="multiple && valueDropSelected">
+            <div *ngFor="let data of valueDropSelected; let index = index;" class="content-multiple-item">
+              <span *ngIf="!bindLabel" class="content-value">{{data}}</span>
+              <span *ngIf="bindLabel" class="content-value">{{data[bindLabel]}}</span>
+              <i *ngIf="!disabled" (click)="removeValueMultiple(index)" class="ri-close-line icon-remove"></i>
+              <input [id]="'multiple' + id" [name]="name" [formControlName]="id" class="input-hidden">
+            </div>
+          </ng-container>
+
+          <i *ngIf="!valueDropSelected || (!valueDropSelected?.length && multiple)" [ngClass]="iconDrop" class="content-icon-drop"></i>
+          <span *ngIf="loadingData" class="content-loading-data"></span>
+        </button>
+
+        <i *ngIf="(valueDropSelected && !multiple) || (valueDropSelected?.length && multiple)" (click)="removeDropValue()" [ngClass]="iconRemove" class="content-icon-remove"></i>
+        <div *ngIf="disabled" class="disable-content"></div>
+      </div>
+
+      <ul *ngIf="dropdownOpen" [id]="'drop' + id" [ngClass]="{'d-block': dropdownOpen}" class="dropdown-menu" >
+        <input *ngIf="searchSelect"
+               id="searchDrop"
+               [(ngModel)]="valueSearchDrop"
+               [ngModelOptions]="{standalone: true}"
+               [placeholder]="placeHolderSearchSelect"
+                class="input-search">
+        <li *ngFor="let option of listDrop | searchDropDown: valueSearchDrop: bindLabel" (click)="selectOption(option)" class="item">
+          <ng-container *ngIf="option !== 'isEmptySearch'">
+            <span *ngIf="!bindLabel" >{{ option }}</span>
+            <span *ngIf="bindLabel" >{{ option[bindLabel] }}</span>
+          </ng-container>
+          <span *ngIf="option === 'isEmptySearch'" [innerText]="txtSearchEmpty">{{ option }}</span>
+        </li>
+      </ul>
+    </div>
+  </ng-container>
+
+  <!-- Messages errors -->
+  <span *ngIf="control?.invalid && (control?.dirty || control?.touched)" class="invalid-feedback">
+   <span *ngIf="control.errors?.['required']">{{invalidMsg}}</span>
+   <span *ngIf="control?.errors?.['email']">Preencha um e-mail válido.</span>
+   <span *ngIf="control?.errors?.['invalidDocument']">Documento inválido.</span>
+  </span>
+</div>

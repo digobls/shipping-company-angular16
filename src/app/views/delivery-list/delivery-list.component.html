@@ -1,0 +1,51 @@
+<div class="col-12 box-rounded-white container-delivery-list">
+  <h1>Lista de Entregas</h1>
+
+  <div class="col-12">
+    <div class="row">
+      <div class="col-12 col-md-6 offset-top-20">
+        <app-input-type
+          [formGroup]="formSearch"
+          [id]="'driver'"
+          [name]="'driver'"
+          [type]="'select'"
+          [label]="'Motorista'"
+          [placeholder]="'Selecione o motorista'"
+          [loadingData]="loadingDrivers"
+          [listDrop]="listDrivers"
+          [searchSelect]="true"
+          [multiple]="false"
+          [showLabel]="true"
+          [isRequired]="false">
+        </app-input-type>
+      </div>
+
+      <div class="col-12 col-md-6 offset-top-20">
+        <app-input-type
+          [formGroup]="formSearch"
+          [id]="'status'"
+          [name]="'status'"
+          [type]="'select'"
+          [label]="'Status'"
+          [placeholder]="'Selecione o status'"
+          [loadingData]="loadingStatus"
+          [listDrop]="listStatus"
+          [searchSelect]="false"
+          [multiple]="false"
+          [showLabel]="true"
+          [isRequired]="false">
+        </app-input-type>
+      </div>
+    </div>
+  </div>
+
+  <div class="offset-top-20">
+    <app-default-simple-table
+      [listHeader]="listHeaderTable"
+      [listData]="filteredDeliveries$ | async"
+      [loadingList]="loadingList"
+      [paginationInfo]="true"
+      [showChangeTotal]="true">
+    </app-default-simple-table>
+  </div>
+</div>

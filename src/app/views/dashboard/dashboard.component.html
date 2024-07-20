@@ -1,0 +1,49 @@
+<div class="row container-dashboard">
+  <div class="col-12 col-md-12">
+    <div class="box-rounded-white">
+      <h2>Andamento de entregas por motorista</h2>
+
+      <div class="offset-top-20">
+        <app-default-simple-table
+          [listHeader]="listHeaderTable1"
+          [listData]="deliveriesByDriver$ | async"
+          [showDisplay]="false"
+          [paginationInfo]="true"
+          [showChangeTotal]="false">
+        </app-default-simple-table>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-12 col-md-12 offset-top-30">
+    <div class="box-rounded-white">
+      <h2>Entregas com insucesso por motorista</h2>
+
+      <div class="offset-top-20">
+        <app-default-simple-table
+          [listHeader]="listHeaderTable2"
+          [listData]="failedDeliveriesByDriver$ | async"
+          [showDisplay]="false"
+          [paginationInfo]="true"
+          [showChangeTotal]="false">
+        </app-default-simple-table>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-12 col-md-12 offset-top-30">
+    <div class="box-rounded-white">
+      <h2>Andamento de entregas por bairro</h2>
+
+      <div class="offset-top-20">
+        <app-default-simple-table
+          [listHeader]="listHeaderTable3"
+          [listData]="deliveriesByNeighborhood$ | async"
+          [showDisplay]="false"
+          [paginationInfo]="true"
+          [showChangeTotal]="false">
+        </app-default-simple-table>
+      </div>
+    </div>
+  </div>
+</div>

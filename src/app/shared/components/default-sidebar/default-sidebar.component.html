@@ -1,0 +1,26 @@
+<nav class="default-sidebar" [ngClass]="{'expanded': isExpanded || showMenu}" (mouseenter)="expand()" (mouseleave)="collapse()">
+  <div class="navbar-header">
+    <ul>
+      <li class="head-logo">
+        <div class="close-and-open-menu">
+          <i (click)="openAndCloseMenu()" [ngClass]="isExpanded ? 'ri-arrow-left-double-line' : 'ri-arrow-right-double-line'"></i>
+        </div>
+      </li>
+    </ul>
+  </div>
+
+  <ul class="navigation">
+    <li>
+      <a [routerLink]="'/dashboard'" title="Dashboard">
+        <i class="ri-dashboard-line"></i>
+        <span>Dashboard</span>
+      </a>
+    </li>
+    <li>
+      <a [routerLink]="'/entregas'" title="Entregas">
+        <i class="ri-truck-line"></i>
+        <span>Entregas</span>
+      </a>
+    </li>
+  </ul>
+</nav>
